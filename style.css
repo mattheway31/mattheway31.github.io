@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Data Analysis Portfolio</title>
+    <style>
+        /* Your CSS rules go here */
+        body {
+            font-family: Arial, sans-serif; /* Change font */
+            line-height: 1.6;
+            margin: 20px; /* Add some space around content */
+            background-color: #f4f4f4; /* Light background color */
+            color: #333; /* Darker text for readability */
+        }
+        h1, h2 {
+            color: #2c3e50; /* Dark blue for headings */
+        }
+        .container { /* A wrapper for your main content */
+            max-width: 960px; /* Limits width for readability on large screens */
+            margin: auto; /* Centers the container */
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
+        }
+        .project-card { /* Style for individual project sections */
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        a {
+            color: #3498db; /* A nice blue for links */
+            text-decoration: none; /* Remove underline */
+        }
+        a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Matthew's Data Analysis Portfolio!</h1>
+        </div>
+</body>
