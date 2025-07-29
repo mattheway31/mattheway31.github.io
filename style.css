@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Data Analysis Portfolio</title>
-    <style>
-        /* Your CSS rules go here */
+
+        /* My style.css file */
         body {
             font-family: Arial, sans-serif; /* Change font */
             line-height: 1.6;
@@ -37,10 +32,4 @@
         a:hover {
             text-decoration: underline; /* Underline on hover */
         }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Welcome to Matthew's Data Analysis Portfolio!</h1>
-        </div>
-</body>
+    
