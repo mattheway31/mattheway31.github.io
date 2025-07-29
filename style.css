@@ -1,7 +1,7 @@
 
         /* My style.css file */
         body {
-            font-family: Arial, sans-serif; /* Change font */
+            font-family: "Times New Roman", Times, serif; /* Change font */
             line-height: 1.6;
             margin: 20px; /* Add some space around content */
             background-color: #f4f4f4; /* Light background color */
