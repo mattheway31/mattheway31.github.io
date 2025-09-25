@@ -1,0 +1,273 @@
+---
+title: "BellaBeat Case Study Report"
+author: "Matthew Yusuf"
+date: "2025-09-12"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+    
+  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+This report outlines the analysis of smart device fitness data. The goal is to
+provide the BellaBeat leadership and marketing analytics team with valuable
+insights into consumer usage and offer recommendations to further guide
+marketing strategies
+
+## Phase 1: Act 
+
+### Business Task
+
+Analyze smart device fitness data to gain insights into how the general public
+uses non-BellaBeat smart devices. The goal is to provide recommendations that
+will assist in guiding BellaBeat's marketing strategies and guide the company
+towards new growth opportunities.
+
+### Stakeholders
+
+The primary stakeholders for this project are Urška Sršen, co-founder and Chief
+Creative Officer, other members of the BellaBeat executive team, and the
+marketing analytics team.
+
+## Phase 2: Prepare
+
+### The Data Source
+
+The public dataset is titled: "FitBit Fitness Tracker Data" on Kaggle. It was
+made available through a survey on Amazon Mechanical Turk and contains data on
+30 FitBit users.
+
+## Phase 3: Process
+
+### Import and Clean Data
+```{r setup and data cleaning, include=FALSE}
+## install packages
+install.packages("tidyverse")
+install.packages("janitor")
+
+
+## load packages
+library(ggplot2)
+library(janitor)
+library(lubridate)
+library(tidyverse)
+
+## import all relevant datasets using read_csv
+daily_activity <- read_csv("dailyActivity_merged.csv")
+minute_sleep <- read_csv("minuteSleep_merged.csv")
+hourly_steps <- read_csv("hourlySteps_merged.csv")
+
+############## PREPARE: inspect/clean the data frames ##################
+
+## check for duplicates
+daily_activity <- daily_activity %>%
+  distinct()
+minute_sleep <- minute_sleep %>%
+  distinct()
+hourly_steps <- hourly_steps %>%
+  distinct()
+
+## check for unique users
+n_distinct(daily_activity$Id)
+n_distinct(minute_sleep$Id)
+n_distinct(hourly_steps$Id)
+
+## standardize column names 
+daily_activity <- daily_activity %>% clean_names()
+minute_sleep <- minute_sleep %>% clean_names()
+hourly_steps <- hourly_steps %>% clean_names()
+
+## format data
+daily_activity <- daily_activity %>%
+  mutate(activity_date = mdy(activity_date))
+minute_sleep <- minute_sleep %>%
+  separate(date, into = c("sleep_date", "sleep_time"), sep = " ") %>%
+  mutate(sleep_date = mdy(sleep_date))
+hourly_steps <- hourly_steps %>%
+  mutate(activity_hour = mdy_hms(activity_hour))
+```
+
+
+
+
+
+### Aggregate and Merge Data Frames
+```{r data-processing}
+## aggregate the sleep and hourly steps data to represent daily totals
+daily_sleep_total <- minute_sleep %>%
+  group_by(id, sleep_date) %>%
+  summarize(total_minutes_asleep = sum(value), .groups = "drop") 
+daily_steps_total <- hourly_steps %>%
+  group_by(id, date = as_date(activity_hour)) %>%
+  summarize(total_steps = sum(step_total), .groups = "drop") 
+
+
+
+## merge datasets
+combined_data <- daily_activity %>%
+  inner_join(daily_sleep_total, by = c("id", "activity_date" = "sleep_date"))
+combined_data <- combined_data %>%
+  inner_join(daily_steps_total, by = c("id" = "id", "activity_date" = "date"))
+```
+
+
+## Phase 4: Analyze
+
+### Descriptive Statistics
+```{r}
+### rename total_steps.y column and then calculate average daily steps, calories burned, and minutes slept
+combined_data <- combined_data %>%
+  rename(hourly_total_steps = total_steps.y)
+
+combined_data %>%
+  summarize(
+    average_daily_steps = mean(hourly_total_steps),
+    average_calories_burned = mean(calories),
+    average_sleep_minutes = mean(total_minutes_asleep)
+  )
+```
+
+### Trends by Day of the Week
+```{r}
+### add day_of_week column
+combined_data <- combined_data %>%
+  mutate(day_of_week = wday(activity_date, label = TRUE))
+
+### calculate average steps by the weekday
+daily_steps_by_day <- combined_data %>%
+  group_by(day_of_week) %>%
+  summarize(
+    average_steps = mean(hourly_total_steps),
+    average_calories = mean(calories)
+  )
+```
+
+We added a day_of_week column to the combined dataset so that we could easily
+calculate the descriptive statistics by each different day of the week.
+
+| Day of Week | Average Steps | Average Calories |
+|-------------|---------------|------------------|
+| Sunday      | 7,243.219     | 2,290.000        |
+| Monday      | 7,764.966     | 2,292.966        |
+| Tuesday     | 6,698.276     | 2,025.724        |
+| Wednesday   | 9,222.091     | 2,629.455        |
+| Thursday    | 8,569.217     | 2,499.348        |
+| Friday      | 8,007.379     | 2,360.207        |
+| Saturday    | 8,086.629     | 2,353.714        |
+
+As you can see, Wednesday and Thursday are the most active days for the users we
+studied. As a result, these are also the days that users burned the most
+calories. This suggests that users are more engaged with their fitness goals in
+the middle of the work week. The days with lowest average steps are Sunday and
+Tuesday, posing a potential marketing opportunity for BellaBeat.
+
+
+### User Segmentation
+```{r}
+## segment users by activity level: categorize users by their average daily steps
+### create a segmented user column
+user_segments <- combined_data %>%
+  group_by(id) %>%
+  summarize(average_steps = mean(hourly_total_steps)) %>%
+  ungroup() %>%
+  mutate(
+    user_type = case_when(
+      average_steps < 5000 ~ "Not Active",
+      average_steps >= 5000 & average_steps < 7500 ~ "Lightly Active",
+      average_steps >= 7500 & average_steps < 10000 ~ "Fairly Active",
+      average_steps >= 10000 ~ "Very Active"
+    )
+  )
+
+```
+
+We created different categories to segment the users into different levels of
+fitness activity. For example, those with an average of less than 5,000 steps
+per day are considered "Not Active," between 5,000 and 7,500 average steps are
+considered "Lightly Active," between 7,500 and 10,000 steps are considred
+"Fairly Active." Lastly, users that were averaging more than 10,000 steps per
+day are to be considered "Very Active."
+
+
+### Relationship between Total Steps and Calories Burned
+```{r}
+ggplot(data = combined_data, aes(x = hourly_total_steps, y = calories)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Total Steps vs. Calories Burned",
+       x = "Total Steps",
+       y = "Calories Burned")
+```
+
+Intuitively, we would think that with the more steps that a user would walk on a
+daily basis, then they would also burn more calories. This trend is confirmed
+with this scatter plot, as demonstrated by the trendline as well. Note that
+there are a number of outliers that may be the result of non-step activities or
+high-intensity interval training. These outliers also present BellaBeat with
+a prime opportunity to guide market strategies towards focusing beyond just
+daily steps.
+
+## Phase 5: Share 
+
+### Key Findings and Recommendations
+
+Our analysis of non-Bellabeat smart device data shows that users are most
+engaged mid-week with a clear peak in fitness and activity on Wednesdays and
+Thursdays. They had the most steps and burned the most calories on these days,
+demonstrating that their motivation is at its highest in the middle of the work
+week. In regards to weekends, activity is relatively inconsistent contrary to
+the common belief that activity levels are significantly higher on Saturdays and
+Sundays. In fact, Tuesdays and Sundays are the days of the week with the lowest
+average steps. It is also important to note that there are a number of outliers
+in the data as well, with users who burn high amounts of calories with low step
+counts. This informs us that fitness is more than just steps walked and that
+users are participating in other activities that may not be primarily step-based
+such as swimming or weightlifting. From our user segmentation, we found that a
+large portion of users are either "Not Active" or "Lightly Active," meaning they
+are not meeting basic activity recommendations. These particular user segments
+may be a potential customer base.
+
+Based on our analysis, we recommend launching a middle-of-the-week promotion to
+capitalize on the higher user usage on Wednesdays and Thursdays. This could be
+like in-app challenges, targeted emails, or push-notifications to encourage
+users to maintain their fitness level. We should also emphasize the diversity
+of our products, focusing on how we track several non-step activities like
+yoga, sleep, any cycling. Lastly, we need to create content and campaigns that
+will help users on their least active days like Sundays and Tuesdays. For
+example, we could offer lower-intensity fitness routines and guided meditations
+on Sundays as some sort of "mental reset" before the upcoming work week.
+
+
+## Phase 6: Act
+
+### Conclusion and Next Steps
+
+Our analysis of non-BellaBeat smart device usage provided us with several
+valuable insights into some of the habits of a small sample size of users. These
+findings include that fitness activity is highest in the middle of the week, 
+engagement is inconsistent during the weekend. and numerous users also partake
+in other non-step-based physical activities. These new discoveries confirm the 
+untapped potential that we have, as a company, to expand our market by targeting
+these user habits. The data-driven recommendations offer our leadership and
+marketing team with optimal strategies to enhance user engagement and enrich
+growth.
+
+Unfortunately, our current analysis is still relatively limited by the
+comparatively smaller sample size of 33 users. We would likely need to expand
+the dataset in order to provide more reliable results. We will suggest our
+team to implement a new survey to collect more data, and even from a wider
+demographic so that we can create and understand more diverse user segments. In
+the end, the marketing team should use the insights from this analysis to
+develop new marketing campaigns.
+
+
+
+
+
