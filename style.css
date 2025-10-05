@@ -33,3 +33,33 @@
             text-decoration: underline; /* Underline on hover */
         }
     
+
+/* --- NEW NAVIGATION BAR STYLING BELOW --- */
+
+/* Styling for the entire navigation container */
+.main-nav ul {
+    list-style-type: none; /* Removes the bullet points */
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+/* Styling for each list item (which contains the link) */
+.main-nav li {
+    float: left; /* Makes the list items line up horizontally */
+}
+
+/* Styling for the actual link text */
+.main-nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Hover effect */
+.main-nav li a:hover {
+    background-color: #111;
+}
