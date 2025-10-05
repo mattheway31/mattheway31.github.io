@@ -1,0 +1,65 @@
+
+        /* My style.css file */
+        body {
+            font-family: "Times New Roman", Times, serif; /* Change font */
+            line-height: 1.6;
+            margin: 20px; /* Add some space around content */
+            background-color: #f4f4f4; /* Light background color */
+            color: #333; /* Darker text for readability */
+        }
+        h1, h2 {
+            color: #2c3e50; /* Dark blue for headings */
+        }
+        .container { /* A wrapper for your main content */
+            max-width: 960px; /* Limits width for readability on large screens */
+            margin: auto; /* Centers the container */
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
+        }
+        .project-card { /* Style for individual project sections */
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        a {
+            color: #3498db; /* A nice blue for links */
+            text-decoration: none; /* Remove underline */
+        }
+        a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+    
+
+/* --- NEW NAVIGATION BAR STYLING BELOW --- */
+
+/* Styling for the entire navigation container */
+.main-nav ul {
+    list-style-type: none; /* Removes the bullet points */
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+/* Styling for each list item (which contains the link) */
+.main-nav li {
+    float: left; /* Makes the list items line up horizontally */
+}
+
+/* Styling for the actual link text */
+.main-nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Hover effect */
+.main-nav li a:hover {
+    background-color: #111;
+}

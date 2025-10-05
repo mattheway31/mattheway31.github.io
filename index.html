@@ -3,49 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Data Analysis Portfolio</title>
+    <title>Matthew Yusuf | Data Analysis Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 	<nav class="main-nav">
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="data_analysis_projects.html">CourseEra Data Analysis Projects</a></li>
-            <li><a href="NBA-Analysis-Projects/nba_projects.html">NBA Statistics</a></li>
-            <li><a href="about.html">About Me</a></li>
-        </ul>
-    </nav>
-	<div class="container">
-        	<h1>Welcome to Matthew's Data Analysis Portfolio!</h1>
+        	<ul>
+            		<li><a href="index.html">Home</a></li>
+            		<li><a href="CourseEra-Projects/data_analysis_projects.html">CourseEra Data Analysis Projects</a></li>
+            		<li><a href="NBA-Analysis-Projects/nba_projects.html">NBA Statistics</a></li>
+       	 	</ul>
+    	</nav>
+	<header class="hero-section">
+		<div class="container">
+        		<h1>Welcome to Matthew's Data Analysis Portfolio!</h1>
 
-		<img src="images/DSC_0493.JPG" alt="Matthew Yusuf" style="width: 150px; border-radius: 50%;">
-		<h2>About Me</h2>
-		<p> Hello! My name is Matthew and I'm an aspiring data analyst and graduate of Cal State Fullerton's Probability & Statistics bachelor's degree prgoram. My 		career journey has been recently supercharged by completing the Google Data Analytics course and now, I'm on the hunt for new opportunities to put my 			skills into practice. While my dream is to work in sports analytics--merging my love for the game with my data-driven mindset-- I'm more than thrilled to 		tackle new challenges and gain work experience across various types of datasets. This portfolio is a peek into my work and journey. </p>
+			<img src="images/DSC_0493.JPG" alt="Matthew Yusuf" style="width: 150px; border-radius: 50%;">
 
-		<h2>My Projects</h2>
-		
-		<div class ="project-card">
-			<h3>Cyclistic: Bike Trips Analysis</h3>
-			<p>In this case study project, I analyzed a year's worth of bike riding data to identify key differences between casual riders and Cyclistic's annual 			members to help direct marketing strategies to convert more casual riders into annual members. </p>
-			<p>
-			<a href="https://mattheway31.github.io/cyclistic_presentation.pdf">View Presentation</a> |
-               		<a href="https://github.com/mattheway31/mattheway31.github.io">View Code on GitHub</a>
-				<embed src="https://mattheway31.github.io/cyclistic_presentation.pdf" type="application/pdf" width="100%" height="600px" />
-			</p>
+			<h2>About Me</h2>
+			<p class="value-prop"> Hello! My name is Matthew and I'm an aspiring data analyst and graduate of Cal State Fullerton's Probability & Statistics 			bachelor's degree prgoram. My career journey has been recently supercharged by completing the Google Data Analytics course and now, I'm on the hunt 			for new opportunities to put my skills into practice. While my dream is to work in sports analytics, combinining my love for the game with my data-			driven mindset, I'm more than thrilled to tackle new challenges and gain work experience across various types of datasets. This portfolio is a peek 			into my work and journey. </p>
+		</div>
+	</header>
+	<hr>
 
-			<h3>BellaBeat Case Study</h3>
-			<p> For this project, I analyzed smart-device usage data to identify trends and patterns in regards to users' wellness habits to help guide 				BellaBeat's marketing strategies and help the company grow. </p>
-			<a href ="https://mattheway31.github.io/BellaBeat-Case-Study/BellBeat-Report.html">View Report</a>
-				<iframe src="https://mattheway31.github.io/BellaBeat-Case-Study/BellBeat-Report.html" width="100%"height="600px" style="border:none;">					</iframe>
-		</div>	
+    	<section class="skills-section">
+        	<h2>My DataAnalytical Toolkit 🛠️</h2>
+        	<div class="skill-groups">
+            
+            		<div class="skill-group">
+                		<h3>Analysis & Programming</h3>
+                		<ul>
+                    			<li>R, RStudio (Tidyverse, ggplot2)</li>
+                    			<li>MATLAB</li>
+                    			<li>SQL, MySQL</li>
+                    			<li>Advanced Excel, SPC for Excel</li>
+					<li>C++</li>
+                		</ul>
+           		</div>
 
-		<h2>Connect with Me!</h2>
-		<p>
-		<a href="https://www.linkedin.com/in/matthew-yusuf-852652229/" target ="_blank">LinkedIn</a> |
-		<a href="https://github.com/mattheway31" target="_blank">Github Profile</a> |
-		<a href="mailto:mattheway3199@gmail.com">Email Me!</a>
-		</p>
+            		<div class="skill-group">
+                		<h3>Data Visualization</h3>
+               			<ul>
+                   			<li>**Tableau**</li>
+                    			<li>R Markdown / Quarto</li>
+                    			<li>Data Storytelling</li>
+                		</ul>
+            		</div>
 
+        	</div>
+   	</section>
+
+    <hr>
+
+    <section class="teaser-section">
+        <h2>Featured Projects</h2>
+        <div class="project-cards">
+            
+            <a href="CourseEra-Projects/courseera_projects.html" class="card CourseEra-card">
+                <h3>CourseEra Projects (R, Excel)</h3>
+                <p>Two full-cycle case studies generating **data-backed marketing recommendations**
+                   for Bellabeat and Cyclistic, focusing on usage trends and user segmentation.</p>
+                <span class="read-more">View Full Report &rarr;</span>
+            </a>
+
+            <a href="NBA-Analysis-Projects/nba_projects.html" class="card nba-card">
+                <h3>NBA Statistics & Visualization (Tableau)</h3>
+                <p>Interactive dashboards and statistical deep dives exploring trends in NBA player 
+                   performance, positional evolution, and salary cap efficiency.</p>
+                <span class="read-more">View Dashboards &rarr;</span>
+            </a>
+            
         </div>
+    </section>
+
+    <hr>
+
+    <footer class="contact-section">
+        <h2>Connect With Me!</h2>
+        <p>I'm currently seeking new data analyst roles. Feel free to reach out!</p>
+        <div class="contact-links">
+            <a href="https://www.linkedin.com/in/matthew-yusuf-852652229/" target="_blank" class="btn linkedin">LinkedIn</a>
+            <a href="https://github.com/mattheway31" target="_blank" class="btn github">GitHub Profile</a>
+            <a href="mailto:mattheway3199@gmail.com" class="btn email">Email Me</a>
+        </div>
+    </footer>
+
 </body>
 </html>
